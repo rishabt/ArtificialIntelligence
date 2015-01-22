@@ -3,6 +3,7 @@ import numpy as np
 import math
 import re
 import time
+import heapq
 
 #Input is a URL
 #Output is a list of the Wikipedia hyperlinks in that webpage
@@ -75,25 +76,47 @@ def dfs(path, depth, end):
 					return next_path
 
 
-"""
+def astar_search(path, end):
+	urllist = url_search(path[-1])
+	print urllist
+	end_split = end.split("/")
+        target_word = end_split[-1]
+	for url in urllist:
+		if url == end:
+			path = path + [url]
+			print path
+			return path
+		else:
+			print path
+			h = find_heuristic(url, target_word)
+			print url
+			if(h == 1):
+                        	next_path = astar_search(path + [url], end)
+				if next_path[-1]==end:
+					return next_path
 
 
 
+def find_heuristic(url, target_word):
+   	words_list = word_search(url)
+	print target_word
+	if target_word in words_list:
+		return 1
+	else:
+		return 0
 
-	INSERT CODE FOR A* SEARCH HERE
-
-
-
-
-"""
 
 starting_url = "http://en.wikipedia.org/wiki/Pie_melon" #Insert starting URL
 ending_url = "http://en.wikipedia.org/wiki/Carrot" #Insert the ending URL
 
 stop_time=300 #Number of seconds before program stops
 
-idpath=id_dfs(starting_url,ending_url, stop_time)
+#idpath=id_dfs(starting_url,ending_url, stop_time)
 
-print idpath
+res = astar_search([starting_url],ending_url)
+
+print res
+
+#print idpath
 
 #Or print "No solution found in the given time frame"  if this is true.
