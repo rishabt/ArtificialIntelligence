@@ -5,6 +5,21 @@ import re
 import time
 import heapq
 
+
+class PriorityQueue:
+	def __init__(self):
+		self.elements = []
+
+	def is_empty(self):
+		return len(self.elements) == 0
+
+	def push(self, item, priority):
+		heapq.heappush(self.elments, (priority, item))
+
+	def pop(self):
+		return heapq.heappop(self.elements)[1]
+
+
 #Input is a URL
 #Output is a list of the Wikipedia hyperlinks in that webpage
 def url_search(input_url):
@@ -78,16 +93,15 @@ def dfs(path, depth, end):
 
 def astar_search(path, end):
 	urllist = url_search(path[-1])
-	print urllist
+	h0 = []
+	h1 = []
 	end_split = end.split("/")
         target_word = end_split[-1]
 	for url in urllist:
 		if url == end:
 			path = path + [url]
-			print path
 			return path
 		else:
-			print path
 			h = find_heuristic(url, target_word)
 			print url
 			if(h == 1):
@@ -99,7 +113,6 @@ def astar_search(path, end):
 
 def find_heuristic(url, target_word):
    	words_list = word_search(url)
-	print target_word
 	if target_word in words_list:
 		return 0
 	else:
