@@ -101,9 +101,9 @@ def find_heuristic(url, target_word):
    	words_list = word_search(url)
 	print target_word
 	if target_word in words_list:
-		return 1
-	else:
 		return 0
+	else:
+		return 1
 
 
 starting_url = "http://en.wikipedia.org/wiki/Pie_melon" #Insert starting URL
