@@ -14,7 +14,7 @@ class PriorityQueue:
 		return len(self.elements) == 0
 
 	def push(self, item, priority):
-		heapq.heappush(self.elments, (priority, item))
+		heapq.heappush(self.elements, (priority, item))
 
 	def pop(self):
 		return heapq.heappop(self.elements)[1]
@@ -91,6 +91,33 @@ def dfs(path, depth, end):
 					return next_path
 
 
+def a_star_search(start, end):
+	pq = PriorityQueue()
+	pq.push(start, 0)
+
+	end_split = end.split("/")
+        target_word = end_split[-1]
+
+	path = {}
+	cost_of_path = {}
+
+	while not pq.is_empty():
+		curr = pq.pop()
+		if curr == end:
+			break
+		print path
+		urllist = url_search(curr)
+		for url in urllist:
+			h = find_heuristic(url, target_word)
+			if url not in cost_of_path:
+				cost_of_path[url] = h
+				priority = h
+				pq.push(url, priority)
+				path[url] = curr
+				print path
+	return path
+	
+"""
 def astar_search(path, end):
 	urllist = url_search(path[-1])
 	h0 = []
@@ -108,7 +135,7 @@ def astar_search(path, end):
                         	next_path = astar_search(path + [url], end)
 				if next_path[-1]==end:
 					return next_path
-
+"""
 
 
 def find_heuristic(url, target_word):
@@ -126,7 +153,7 @@ stop_time=300 #Number of seconds before program stops
 
 #idpath=id_dfs(starting_url,ending_url, stop_time)
 
-res = astar_search([starting_url],ending_url)
+res = a_star_search(starting_url,ending_url)
 
 print res
 
