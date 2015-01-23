@@ -91,6 +91,50 @@ def dfs(path, depth, end):
 					return next_path
 
 
+def astar(start, end):
+	pq = PriorityQueue()
+	pq.push(start, 1)
+
+	end_split = end.split("/")
+        target_word = end_split[-1]
+
+	path = [start]
+	h0 = []
+	h1 = []
+
+	while not pq.is_empty():
+		curr = pq.pop()
+				
+		if(curr == end):
+			if curr not in path:
+				path = path + [curr]
+			break
+		else:
+			if curr not in path:
+				path = path + [curr]
+	
+			urllist = url_search(curr)
+			print urllist
+			print "Searching " + curr
+			#print urllist
+			for url in urllist:
+				h = find_heuristic(url, target_word)
+				if url == end:
+					if url not in path:
+						path = path + [url]
+						return path
+				if h == 0:
+					if url not in h0:
+						pq.push(url, 0)
+						h0.append(url)
+				else:
+					if url not in h1:
+						pq.push(url, 1)
+						h1.append(url)
+
+	return path
+
+"""
 def a_star_search(start, end):
 	pq = PriorityQueue()
 	pq.push(start, 0)
@@ -105,10 +149,11 @@ def a_star_search(start, end):
 		curr = pq.pop()
 		if curr == end:
 			break
-		print path
 		urllist = url_search(curr)
 		for url in urllist:
 			h = find_heuristic(url, target_word)
+			if url == end:
+				break
 			if url not in cost_of_path:
 				cost_of_path[url] = h
 				priority = h
@@ -116,7 +161,7 @@ def a_star_search(start, end):
 				path[url] = curr
 				print path
 	return path
-	
+"""	
 """
 def astar_search(path, end):
 	urllist = url_search(path[-1])
@@ -146,14 +191,14 @@ def find_heuristic(url, target_word):
 		return 1
 
 
-starting_url = "http://en.wikipedia.org/wiki/Pie_melon" #Insert starting URL
-ending_url = "http://en.wikipedia.org/wiki/Carrot" #Insert the ending URL
+starting_url = "http://en.wikipedia.org/wiki/Guitar" #Insert starting URL
+ending_url = "http://en.wikipedia.org/wiki/Frankenstein" #Insert the ending URL
 
 stop_time=300 #Number of seconds before program stops
 
 #idpath=id_dfs(starting_url,ending_url, stop_time)
 
-res = a_star_search(starting_url,ending_url)
+res = astar(starting_url,ending_url)
 
 print res
 
