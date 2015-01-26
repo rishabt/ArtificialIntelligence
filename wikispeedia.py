@@ -97,6 +97,7 @@ def astar(start, end):
 
 	end_split = end.split("/")
         target_word = end_split[-1]
+	target_word = target_word.replace("_", " ")
 
 	path = [start]
 	h0 = []
@@ -114,9 +115,7 @@ def astar(start, end):
 				path = path + [curr]
 	
 			urllist = url_search(curr)
-			print urllist
 			print "Searching " + curr
-			#print urllist
 			for url in urllist:
 				h = find_heuristic(url, target_word)
 				if url == end:
@@ -133,54 +132,6 @@ def astar(start, end):
 						h1.append(url)
 
 	return path
-
-"""
-def a_star_search(start, end):
-	pq = PriorityQueue()
-	pq.push(start, 0)
-
-	end_split = end.split("/")
-        target_word = end_split[-1]
-
-	path = {}
-	cost_of_path = {}
-
-	while not pq.is_empty():
-		curr = pq.pop()
-		if curr == end:
-			break
-		urllist = url_search(curr)
-		for url in urllist:
-			h = find_heuristic(url, target_word)
-			if url == end:
-				break
-			if url not in cost_of_path:
-				cost_of_path[url] = h
-				priority = h
-				pq.push(url, priority)
-				path[url] = curr
-				print path
-	return path
-"""	
-"""
-def astar_search(path, end):
-	urllist = url_search(path[-1])
-	h0 = []
-	h1 = []
-	end_split = end.split("/")
-        target_word = end_split[-1]
-	for url in urllist:
-		if url == end:
-			path = path + [url]
-			return path
-		else:
-			h = find_heuristic(url, target_word)
-			print url
-			if(h == 1):
-                        	next_path = astar_search(path + [url], end)
-				if next_path[-1]==end:
-					return next_path
-"""
 
 
 def find_heuristic(url, target_word):
