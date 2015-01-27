@@ -5,7 +5,6 @@ import re
 import time
 import heapq
 
-
 class PriorityQueue:
 	def __init__(self):
 		self.elements = []
@@ -141,6 +140,20 @@ def find_heuristic(url, target_word):
 	else:
 		return 1
 
+
+def improved_find_heuristic(url, target_word, target_url):
+	words_list = word_search(url)
+	urllist = url_search(url)
+
+	heuristic = 0
+
+	if word not in words_list:
+		heuristic = heuristic + 1
+
+	if target_url not in urllist:
+		heuristic = heuristic + 1
+
+	return heuristic
 
 starting_url = "http://en.wikipedia.org/wiki/Guitar" #Insert starting URL
 ending_url = "http://en.wikipedia.org/wiki/Frankenstein" #Insert the ending URL
