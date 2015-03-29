@@ -1,4 +1,4 @@
-package s260446450;
+package s260448450;
 
 import boardgame.Board;
 import boardgame.BoardState;
@@ -12,17 +12,17 @@ import omweso.CCMove;
 import java.util.ArrayList;
 import java.util.Random;
 
-import s260446450.mytools.MyTools;
+import s260448450.mytools.MyTools;
 
 /** A random Omweso player. */
-public class s260446450Player extends Player {
+public class s260448450Player extends Player {
     Random rand = new Random();
 
     /** You must provide a default public constructor like this,
      * which does nothing but call the base-class constructor with
      * your student number. */
-    public s260446450Player() { super("260448450"); }
-    public s260446450Player(String s) { super(s); }
+    public s260448450Player() { super("260448450"); }
+    public s260448450Player(String s) { super(s); }
 
     /** Leave this method unchanged. */
     public Board createBoard() { return new CCBoard(); }
@@ -88,6 +88,8 @@ public class s260446450Player extends Player {
         }else{
             // Play a normal turn. Choose a random pit to play.
             ArrayList<CCMove> moves = board_state.getLegalMoves();
+
+            //System.out.println(moves(1).toString());
             return moves.get(rand.nextInt(moves.size()));
         }
     }
