@@ -1,4 +1,4 @@
-package sXXXXXXXXX.mytools;
+package s260448450.mytools;
 
 public class MyTools {
 
