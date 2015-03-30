@@ -117,10 +117,9 @@ public class MyTools {
     
     public static int[] minimax(int level, int play, CCBoardState bs, int[] myseeds_initial, int[] opseeds_initial){
     	
-    	int best_score = 0;
     	int best_node = 0;
     	int curr_score = 0;
-    	int bestScore = (play == 0) ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+    	int best_score = (play == 0) ? Integer.MIN_VALUE : Integer.MAX_VALUE;
     	
     	ArrayList<CCMove> remaining_moves = bs.getLegalMoves();
     	if(level == 0 || remaining_moves.isEmpty()){
@@ -129,13 +128,19 @@ public class MyTools {
     	else{
     		if(play == 0){
     			ArrayList<CCMove> moves = bs.getLegalMoves();
+
     			for(int i = 0; i < moves.size(); i++){
     				CCMove m = moves.get(i);
     				int[][] state = bs.getBoard();
     				CCBoardState clone = (CCBoardState) bs.clone();
     				clone.move(m);
-    				int next = (play == 0) ? 0 : 1;
-    				curr_score = minimax(level - 1, next, clone, state[0], state[1])[0];
+    				if(bs.haveWon()){
+    					best_node = i;
+    					break;
+    				}
+    				//int next = (play == 0) ? 0 : 1;
+    				curr_score = minimax(level - 1, 1, clone, state[0], state[1])[0];
+
     				if(curr_score > best_score){
     					best_score = curr_score;
     					best_node = i;
@@ -144,13 +149,19 @@ public class MyTools {
     		}
     		else{
     			ArrayList<CCMove> moves = bs.getLegalMoves();
+
     			for(int i = 0; i < moves.size(); i++){
     				CCMove m = moves.get(i);
     				int[][] state = bs.getBoard();
     				CCBoardState clone = (CCBoardState) bs.clone();
     				clone.move(m);
-    				int next = (play == 0) ? 0 : 1;
-    				curr_score = minimax(level - 1, next, clone, state[1], state[0])[0];
+    				if(bs.haveLost()){
+    					best_node = i;
+    					break;
+    				}
+    				//int next = (play == 0) ? 0 : 1;
+    				curr_score = minimax(level - 1, 0, clone, state[1], state[0])[0];
+
     				if(curr_score < best_score){
     					best_score = curr_score;
     					best_node = i;
@@ -158,7 +169,16 @@ public class MyTools {
     			}
     		}
     	}
-    	
+    	    	
     	return new int[] {best_score, best_node};
+    }
+    
+    public static void printMoveList(ArrayList<CCMove> m){
+    	
+    	System.out.print("List of legal moves: " );
+    	for(CCMove e : m){
+    		System.out.print(e.getPit() + " ");
+    	}
+    	System.out.println();
     }
 }

@@ -90,7 +90,7 @@ public class s260448450Player extends Player {
             ArrayList<CCMove> moves = board_state.getLegalMoves();
             
             int[][] init = board_state.getBoard();
-            int move = MyTools.minimax(8, 0, board_state, init[0], init[1])[1];
+            int move = MyTools.minimax(4, 0, board_state, init[0], init[1])[1];
             return moves.get(move);
         }
     }
