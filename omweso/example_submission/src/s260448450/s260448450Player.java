@@ -57,7 +57,7 @@ public class s260448450Player extends Player {
 
         // Use my tool to do precisely nothing
         MyTools.getSomething();
-
+        
         if(!board_state.isInitialized()){
             // Code for setting up our initial position. Also, if your agent needs to be
             // set-up in any way (e.g. loading data from files) you should do it here.
@@ -88,9 +88,10 @@ public class s260448450Player extends Player {
         }else{
             // Play a normal turn. Choose a random pit to play.
             ArrayList<CCMove> moves = board_state.getLegalMoves();
-
-            //System.out.println(moves(1).toString());
-            return moves.get(rand.nextInt(moves.size()));
+            
+            int[][] init = board_state.getBoard();
+            int move = MyTools.minimax(8, 0, board_state, init[0], init[1])[1];
+            return moves.get(move);
         }
     }
 }
