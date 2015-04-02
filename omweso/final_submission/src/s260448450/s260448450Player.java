@@ -89,6 +89,7 @@ public class s260448450Player extends Player {
             // Play a normal turn. Choose a random pit to play.
             ArrayList<CCMove> moves = board_state.getLegalMoves();
             
+            // Search up till depth 4
             int[][] init = board_state.getBoard();
             int move = MyTools.minimax(4, 0, board_state, init[0], init[1])[1];
             return moves.get(move);
